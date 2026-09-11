@@ -10,13 +10,13 @@ import (
 // Do not name tools pendant_* (host would expose pendant__pendant_avatar_update).
 // See https://github.com/shotah/ai-gantry/blob/main/docs/mcp-naming.md
 const (
-	ToolAvatarUpdate    = "avatar_update"
-	ToolAvatarGet       = "avatar_get"
-	ToolBackdropUpdate  = "backdrop_update"
-	ToolBackdropDelete  = "backdrop_delete"
-	ToolThemeList       = "theme_list"
-	ToolThemeUpdate     = "theme_update"
-	ToolThemeDelete     = "theme_delete"
+	ToolAvatarUpdate   = "avatar_update"
+	ToolAvatarGet      = "avatar_get"
+	ToolBackdropUpdate = "backdrop_update"
+	ToolBackdropDelete = "backdrop_delete"
+	ToolThemeList      = "theme_list"
+	ToolThemeUpdate    = "theme_update"
+	ToolThemeDelete    = "theme_delete"
 )
 
 const (

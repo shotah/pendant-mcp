@@ -6,6 +6,7 @@ import (
 	"os"
 
 	mcpserver "github.com/mark3labs/mcp-go/server"
+
 	"github.com/shotah/pendant-mcp/server"
 	"github.com/shotah/pendant-mcp/tools"
 )
