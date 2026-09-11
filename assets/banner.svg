@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="pendant-mcp - face wallpaper mood">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#101820"/>
+      <stop offset="50%" stop-color="#1a2834"/>
+      <stop offset="100%" stop-color="#243746"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a4f60"/>
+      <stop offset="100%" stop-color="#2a3a48"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f6d36b"/>
+      <stop offset="55%" stop-color="#f0b429"/>
+      <stop offset="100%" stop-color="#c98412"/>
+    </linearGradient>
+    <linearGradient id="bezel" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#3d5366"/>
+      <stop offset="40%" stop-color="#1c2a38"/>
+      <stop offset="100%" stop-color="#121a22"/>
+    </linearGradient>
+    <linearGradient id="night" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1020"/>
+      <stop offset="45%" stop-color="#152238"/>
+      <stop offset="100%" stop-color="#0c141c"/>
+    </linearGradient>
+    <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8eb4d4" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#8eb4d4" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="outBubble" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f0b429"/>
+      <stop offset="100%" stop-color="#e8a317"/>
+    </linearGradient>
+    <linearGradient id="inBubble" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a3a48"/>
+      <stop offset="100%" stop-color="#1c2a38"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="56%" cy="52%" r="38%">
+      <stop offset="0%" stop-color="#f0b429" stop-opacity="0.42"/>
+      <stop offset="55%" stop-color="#f0b429" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#f0b429" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f4f7fa" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#f4f7fa" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lamp" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#f6d36b" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#f6d36b" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#8fa3b4" stroke-opacity="0.08" stroke-width="1"/>
+    </pattern>
+    <pattern id="scan" width="6" height="6" patternUnits="userSpaceOnUse">
+      <path d="M0 5.5h6" stroke="#8eb4d4" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+    <pattern id="wins" width="14" height="16" patternUnits="userSpaceOnUse">
+      <rect x="2" y="3" width="3" height="4" fill="#f6d36b" opacity="0.72"/>
+      <rect x="8" y="8" width="3" height="4" fill="#8eb4d4" opacity="0.35"/>
+    </pattern>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <filter id="glowEdge" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#f0b429" flood-opacity="0.35"/>
+    </filter>
+    <clipPath id="screen">
+      <rect x="12" y="12" width="212" height="276" rx="22"/>
+    </clipPath>
+    <clipPath id="faceRing">
+      <circle cx="40" cy="44" r="16"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1280" height="420" fill="url(#sky)"/>
+  <rect width="1280" height="420" fill="url(#grid)"/>
+  <ellipse cx="720" cy="220" rx="340" ry="190" fill="url(#glow)"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+    <text x="72" y="54" fill="#f4f7fa" font-size="46" font-weight="700" letter-spacing="-1">pendant-mcp</text>
+    <text x="74" y="80" fill="#e8a317" font-size="14" letter-spacing="2.6">FACE / WALLPAPER / MOOD / STDIO</text>
+  </g>
+
+  <g filter="url(#soft)">
+    <rect x="72" y="112" width="400" height="204" rx="12" fill="url(#card)" stroke="#6f8799"/>
+    <circle cx="96" cy="134" r="5" fill="#c45c4a"/>
+    <circle cx="114" cy="134" r="5" fill="#f0b429"/>
+    <circle cx="132" cy="134" r="5" fill="#6f8799"/>
+    <text x="152" y="138" fill="#8fa3b4" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.4">stdio</text>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+      <text x="96" y="172" fill="#8fa3b4" font-size="14">$</text>
+      <text x="114" y="172" fill="#c9d7e3" font-size="14">image__photo_generate</text>
+      <text x="114" y="196" fill="#8fa3b4" font-size="13">1:1 portrait  →  face.png</text>
+      <text x="96" y="228" fill="#8fa3b4" font-size="14">$</text>
+      <text x="114" y="228" fill="#f4f7fa" font-size="14" font-weight="700">pendant__avatar_update</text>
+      <text x="114" y="252" fill="#c9d7e3" font-size="13">source_path=face.png</text>
+      <text x="96" y="284" fill="#8fa3b4" font-size="14">$</text>
+      <text x="114" y="284" fill="#f0b429" font-size="14" font-weight="700">theme_update("noir")</text>
+      <rect x="292" y="272" width="9" height="14" fill="#f0b429"/>
+    </g>
+  </g>
+
+  <g transform="translate(478,214)" fill="none" stroke="#f0b429" stroke-width="2">
+    <path d="M0 0 C28 -8 48 -8 72 0" stroke-dasharray="5 5" opacity="0.85"/>
+    <circle cx="84" cy="0" r="7" fill="#15202b" stroke="url(#gold)" stroke-width="2.5"/>
+    <circle cx="84" cy="0" r="2.6" fill="#f0b429"/>
+  </g>
+
+  <g transform="translate(568,92) rotate(-5 118 150)" filter="url(#soft)">
+    <rect x="0" y="0" width="236" height="300" rx="34" fill="url(#bezel)" stroke="#f0b429" stroke-width="2.5"/>
+    <rect x="8" y="8" width="220" height="284" rx="28" fill="#0a0c10"/>
+    <rect x="88" y="16" width="60" height="8" rx="4" fill="#15202b"/>
+
+    <g clip-path="url(#screen)">
+      <rect x="12" y="12" width="212" height="276" fill="url(#night)"/>
+      <ellipse cx="168" cy="58" rx="34" ry="34" fill="url(#moonGlow)"/>
+      <circle cx="168" cy="58" r="11" fill="#e8eef3"/>
+      <circle cx="173" cy="54" r="9" fill="#0a1020"/>
+      <circle cx="48" cy="42" r="1.2" fill="#f4f7fa" opacity="0.7"/>
+      <circle cx="72" cy="56" r="1" fill="#f4f7fa" opacity="0.45"/>
+      <circle cx="118" cy="38" r="1.1" fill="#f4f7fa" opacity="0.6"/>
+      <circle cx="196" cy="72" r="1" fill="#f4f7fa" opacity="0.5"/>
+      <circle cx="36" cy="70" r="0.8" fill="#f4f7fa" opacity="0.4"/>
+      <rect x="12" y="118" width="212" height="80" fill="url(#haze)"/>
+      <g fill="#121820">
+        <rect x="12" y="148" width="44" height="140"/>
+        <rect x="52" y="128" width="36" height="160"/>
+        <rect x="86" y="156" width="52" height="132"/>
+        <rect x="136" y="136" width="40" height="152"/>
+        <rect x="174" y="160" width="50" height="128"/>
+      </g>
+      <g fill="url(#wins)">
+        <rect x="12" y="148" width="44" height="140"/>
+        <rect x="52" y="128" width="36" height="160"/>
+        <rect x="86" y="156" width="52" height="132"/>
+        <rect x="136" y="136" width="40" height="152"/>
+        <rect x="174" y="160" width="50" height="128"/>
+      </g>
+      <rect x="12" y="12" width="212" height="276" fill="url(#scan)"/>
+
+      <rect x="12" y="12" width="212" height="64" fill="#0a0c10" opacity="0.72"/>
+      <g clip-path="url(#faceRing)">
+        <circle cx="40" cy="44" r="16" fill="#15202b"/>
+        <circle cx="40" cy="40" r="6.5" fill="#c9d7e3"/>
+        <ellipse cx="40" cy="54" rx="9" ry="8" fill="#c9d7e3"/>
+      </g>
+      <circle cx="40" cy="44" r="17" fill="none" stroke="url(#gold)" stroke-width="2.4"/>
+      <text x="64" y="40" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" font-weight="700">kit</text>
+      <rect x="64" y="46" width="52" height="14" rx="7" fill="#1c2a38" stroke="#8eb4d4"/>
+      <text x="90" y="56" text-anchor="middle" fill="#8eb4d4" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" font-weight="700" letter-spacing="0.8">NOIR</text>
+
+      <rect x="24" y="92" width="132" height="36" rx="12" fill="url(#inBubble)" stroke="#3a4f60"/>
+      <text x="36" y="114" fill="#c9d7e3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">be Batman tonight</text>
+
+      <rect x="78" y="140" width="130" height="40" rx="12" fill="url(#outBubble)"/>
+      <text x="92" y="156" fill="#15202b" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" font-weight="700">noir · Gotham night</text>
+      <text x="92" y="172" fill="#3a2a08" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9">face + wallpaper on</text>
+
+      <rect x="96" y="274" width="44" height="5" rx="2.5" fill="#f4f7fa" opacity="0.28"/>
+    </g>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" filter="url(#soft)">
+    <g transform="translate(860,124)">
+      <rect width="280" height="78" rx="10" fill="url(#card)" stroke="#f0b429" stroke-width="2" filter="url(#glowEdge)"/>
+      <rect x="16" y="18" width="28" height="42" rx="6" fill="#0a0c10" stroke="#8eb4d4"/>
+      <text x="58" y="36" fill="#8fa3b4" font-size="11" letter-spacing="1.2">theme</text>
+      <text x="58" y="58" fill="#f4f7fa" font-size="20" font-weight="700">noir</text>
+      <text x="132" y="58" fill="#8eb4d4" font-size="13">Gotham night</text>
+    </g>
+    <g transform="translate(860,214)">
+      <rect width="280" height="62" rx="10" fill="url(#card)" stroke="#6f8799"/>
+      <rect x="16" y="14" width="28" height="34" rx="6" fill="#0e1316" stroke="#f07848"/>
+      <text x="58" y="28" fill="#8fa3b4" font-size="11" letter-spacing="1.2">theme</text>
+      <text x="58" y="50" fill="#f4f7fa" font-size="16" font-weight="700">ember</text>
+      <text x="132" y="50" fill="#f07848" font-size="12">warm coal</text>
+    </g>
+    <g transform="translate(860,288)">
+      <rect width="280" height="62" rx="10" fill="url(#card)" stroke="#6f8799"/>
+      <rect x="16" y="14" width="28" height="34" rx="6" fill="#0a1418" stroke="#3db8a0"/>
+      <text x="58" y="28" fill="#8fa3b4" font-size="11" letter-spacing="1.2">theme</text>
+      <text x="58" y="50" fill="#f4f7fa" font-size="16" font-weight="700">tide</text>
+      <text x="132" y="50" fill="#3db8a0" font-size="12">low water</text>
+    </g>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" font-weight="700">
+    <g transform="translate(72,338)">
+      <rect width="148" height="28" rx="6" fill="#3f5870" stroke="#f0b429"/>
+      <text x="74" y="19" text-anchor="middle" fill="#f4f7fa">avatar_update</text>
+    </g>
+    <g transform="translate(232,338)">
+      <rect width="168" height="28" rx="6" fill="#3f5870" stroke="#f0b429"/>
+      <text x="84" y="19" text-anchor="middle" fill="#f4f7fa">backdrop_update</text>
+    </g>
+    <g transform="translate(412,338)">
+      <rect width="128" height="28" rx="6" fill="#3f5870" stroke="#f0b429"/>
+      <text x="64" y="19" text-anchor="middle" fill="#f4f7fa">theme_list</text>
+    </g>
+    <g transform="translate(552,338)">
+      <rect width="200" height="28" rx="6" fill="#3a4f60" stroke="#6f8799"/>
+      <text x="100" y="19" text-anchor="middle" fill="#c9d7e3">PENDANT_BEARER</text>
+    </g>
+  </g>
+</svg>

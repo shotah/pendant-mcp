@@ -1,0 +1,1 @@
+{"name":"pendant","command":"pendant-mcp","env_keys":[],"optional_env_keys":["PENDANT_MAILBOX_URL","PENDANT_BEARER","IMAGE_OUTPUT_DIR","PENDANT_IMAGE_DIR"],"blurb":"Pendant face / wallpaper / mood. Crane already has PENDANT_MAILBOX_URL + PENDANT_BEARER. IMAGE_OUTPUT_DIR is the photo_generate handoff; optional PENDANT_IMAGE_DIR is a second allowed root."}
