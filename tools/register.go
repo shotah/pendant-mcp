@@ -25,7 +25,6 @@ const (
 	nextBackdropUpdate = `Next: backdrop_update(source_path="<IMAGE_OUTPUT_DIR/file.png>")`
 	nextBackdropDelete = `Next: backdrop_delete()`
 	nextThemeList      = `Next: theme_list()`
-	nextThemeUpdate    = `Next: theme_update(theme="noir")`
 	nextThemeDelete    = `Next: theme_delete()`
 )
 

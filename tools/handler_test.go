@@ -83,22 +83,44 @@ func TestAvatarUpdateRefusesOutsidePath(t *testing.T) {
 func TestThemeUpdateTeachIn(t *testing.T) {
 	t.Setenv(EnvPendantMailboxURL, "wss://example.workers.dev/ws/kit")
 	t.Setenv(EnvPendantBearer, "secret")
+	posts := 0
+	old := httpDo
+	t.Cleanup(func() { httpDo = old })
+	httpDo = func(req *http.Request) (*http.Response, error) {
+		if req.Method == http.MethodPost {
+			posts++
+		}
+		if req.Method != http.MethodGet {
+			t.Fatalf("unlisted theme must not POST, got %s", req.Method)
+		}
+		return jsonResponse(200, `{"theme":"boom","themes":[{"id":"noir","label":"Noir","mood":"Gotham night","canvas":"#0a0c10","accent":"#8eb4d4"}]}`), nil
+	}
 	s := newToolServer(t)
 	text, isErr := callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "#ff00ff"})
 	if !isErr || !strings.Contains(text, "theme_list") {
 		t.Fatalf("want theme_list teach-in, got err=%v text=%s", isErr, text)
+	}
+	if posts != 0 {
+		t.Fatalf("posts = %d, want 0", posts)
+	}
+	text, isErr = callTool(t, s, ToolThemeUpdate, map[string]any{})
+	if !isErr || !strings.Contains(text, "theme_list") {
+		t.Fatalf("want empty teach-in, got err=%v text=%s", isErr, text)
 	}
 }
 
 func TestThemeListAndUpdate(t *testing.T) {
 	t.Setenv(EnvPendantMailboxURL, "wss://example.workers.dev/ws/kit")
 	t.Setenv(EnvPendantBearer, "secret")
+	gets, posts := 0, 0
 	old := httpDo
 	t.Cleanup(func() { httpDo = old })
 	httpDo = func(req *http.Request) (*http.Response, error) {
 		if req.Method == http.MethodGet {
+			gets++
 			return jsonResponse(200, `{"theme":"boom","themes":[{"id":"noir","label":"Noir","mood":"Gotham night","canvas":"#0a0c10","accent":"#8eb4d4"}]}`), nil
 		}
+		posts++
 		body, _ := io.ReadAll(req.Body)
 		if !strings.Contains(string(body), `"noir"`) {
 			t.Fatalf("body = %s", body)
@@ -113,6 +135,59 @@ func TestThemeListAndUpdate(t *testing.T) {
 	text, isErr = callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "noir"})
 	if isErr || !strings.Contains(text, `"theme":"noir"`) {
 		t.Fatalf("theme_update err=%v text=%s", isErr, text)
+	}
+	if gets != 1 || posts != 1 {
+		t.Fatalf("gets=%d posts=%d, want 1 GET (cached into update) and 1 POST", gets, posts)
+	}
+}
+
+func TestThemeUpdateAcceptsListedPaper(t *testing.T) {
+	t.Setenv(EnvPendantMailboxURL, "wss://example.workers.dev/ws/kit")
+	t.Setenv(EnvPendantBearer, "secret")
+	old := httpDo
+	t.Cleanup(func() { httpDo = old })
+	httpDo = func(req *http.Request) (*http.Response, error) {
+		if req.Method == http.MethodGet {
+			return jsonResponse(200, `{"theme":null,"themes":[{"id":"paper","label":"Paper","mood":"day workshop","canvas":"#f6f1e8","accent":"#c24a28"}]}`), nil
+		}
+		body, _ := io.ReadAll(req.Body)
+		if req.Method != http.MethodPost || !strings.Contains(string(body), `"paper"`) {
+			t.Fatalf("method=%s body=%s", req.Method, body)
+		}
+		return jsonResponse(200, `{"ok":true,"theme":"paper"}`), nil
+	}
+	s := newToolServer(t)
+	text, isErr := callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "paper"})
+	if isErr || !strings.Contains(text, `"theme":"paper"`) {
+		t.Fatalf("theme_update paper err=%v text=%s", isErr, text)
+	}
+}
+
+func TestThemeUpdateClearsCacheWhenWorkerRejects(t *testing.T) {
+	t.Setenv(EnvPendantMailboxURL, "wss://example.workers.dev/ws/kit")
+	t.Setenv(EnvPendantBearer, "secret")
+	gets, posts := 0, 0
+	old := httpDo
+	t.Cleanup(func() { httpDo = old })
+	httpDo = func(req *http.Request) (*http.Response, error) {
+		if req.Method == http.MethodGet {
+			gets++
+			return jsonResponse(200, `{"theme":null,"themes":[{"id":"noir","label":"Noir","mood":"Gotham night","canvas":"#0a0c10","accent":"#8eb4d4"}]}`), nil
+		}
+		posts++
+		return jsonResponse(400, `{"error":"bad theme"}`), nil
+	}
+	s := newToolServer(t)
+	text, isErr := callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "noir"})
+	if !isErr || !strings.Contains(text, "bad theme") {
+		t.Fatalf("want worker reject, got err=%v text=%s", isErr, text)
+	}
+	text, isErr = callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "noir"})
+	if !isErr || !strings.Contains(text, "bad theme") {
+		t.Fatalf("want second reject, got err=%v text=%s", isErr, text)
+	}
+	if gets != 2 || posts != 2 {
+		t.Fatalf("gets=%d posts=%d, want 2 each after cache drop", gets, posts)
 	}
 }
 
@@ -239,6 +314,7 @@ func jsonResponse(status int, body string) *http.Response {
 
 func newToolServer(t *testing.T) *mcpserver.MCPServer {
 	t.Helper()
+	resetThemeCatalogCache()
 	s := server.New()
 	Register(s)
 	return s

@@ -2,6 +2,7 @@ package tools
 
 import (
 	"context"
+	"encoding/json"
 	"regexp"
 	"strings"
 	"testing"
@@ -61,7 +62,20 @@ func TestRegisteredToolNamesMatchCatalog(t *testing.T) {
 	}
 }
 
-func registeredToolNames(t *testing.T, s *mcpserver.MCPServer) map[string]bool {
+func TestRegisteredToolsDoNotNameCatalogCards(t *testing.T) {
+	t.Parallel()
+	s := server.New()
+	Register(s)
+	for _, tool := range registeredTools(t, s) {
+		raw, err := json.Marshal(tool)
+		if err != nil {
+			t.Fatalf("marshal %s: %v", tool.Name, err)
+		}
+		assertNoCatalogIDs(t, string(raw))
+	}
+}
+
+func registeredTools(t *testing.T, s *mcpserver.MCPServer) []mcp.Tool {
 	t.Helper()
 	resp := s.HandleMessage(context.Background(), []byte(`{"jsonrpc":"2.0","id":1,"method":"tools/list"}`))
 	result, ok := resp.(mcp.JSONRPCResponse)
@@ -72,8 +86,14 @@ func registeredToolNames(t *testing.T, s *mcpserver.MCPServer) map[string]bool {
 	if !ok {
 		t.Fatalf("expected ListToolsResult, got %T", result.Result)
 	}
-	names := make(map[string]bool, len(listResult.Tools))
-	for _, tool := range listResult.Tools {
+	return listResult.Tools
+}
+
+func registeredToolNames(t *testing.T, s *mcpserver.MCPServer) map[string]bool {
+	t.Helper()
+	tools := registeredTools(t, s)
+	names := make(map[string]bool, len(tools))
+	for _, tool := range tools {
 		names[tool.Name] = true
 	}
 	return names
