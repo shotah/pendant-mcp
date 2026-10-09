@@ -93,7 +93,7 @@ func TestThemeUpdateTeachIn(t *testing.T) {
 		if req.Method != http.MethodGet {
 			t.Fatalf("unlisted theme must not POST, got %s", req.Method)
 		}
-		return jsonResponse(200, `{"theme":"boom","themes":[{"id":"noir","label":"Noir","mood":"Gotham night","canvas":"#0a0c10","accent":"#8eb4d4"}]}`), nil
+		return jsonResponse(200, `{"theme":"boom","themes":[{"id":"siren","label":"Siren","feel":"angry","scheme":"dark","mood":"angry, dark — siren at night: black red, scarlet","canvas":"#160608","accent":"#ff2e3f"}]}`), nil
 	}
 	s := newToolServer(t)
 	text, isErr := callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "#ff00ff"})
@@ -107,6 +107,13 @@ func TestThemeUpdateTeachIn(t *testing.T) {
 	if !isErr || !strings.Contains(text, "theme_list") {
 		t.Fatalf("want empty teach-in, got err=%v text=%s", isErr, text)
 	}
+	text, isErr = callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "noir"})
+	if !isErr || !strings.Contains(text, "theme_list") {
+		t.Fatalf("want retired id refused, got err=%v text=%s", isErr, text)
+	}
+	if posts != 0 {
+		t.Fatalf("posts = %d, want 0", posts)
+	}
 }
 
 func TestThemeListAndUpdate(t *testing.T) {
@@ -118,22 +125,22 @@ func TestThemeListAndUpdate(t *testing.T) {
 	httpDo = func(req *http.Request) (*http.Response, error) {
 		if req.Method == http.MethodGet {
 			gets++
-			return jsonResponse(200, `{"theme":"boom","themes":[{"id":"noir","label":"Noir","mood":"Gotham night","canvas":"#0a0c10","accent":"#8eb4d4"}]}`), nil
+			return jsonResponse(200, `{"theme":"boom","themes":[{"id":"siren","label":"Siren","feel":"angry","scheme":"dark","mood":"angry, dark — siren at night: black red, scarlet","canvas":"#160608","accent":"#ff2e3f"}]}`), nil
 		}
 		posts++
 		body, _ := io.ReadAll(req.Body)
-		if !strings.Contains(string(body), `"noir"`) {
+		if !strings.Contains(string(body), `"siren"`) {
 			t.Fatalf("body = %s", body)
 		}
-		return jsonResponse(200, `{"ok":true,"theme":"noir","detail":"theme noir"}`), nil
+		return jsonResponse(200, `{"ok":true,"theme":"siren","detail":"theme siren"}`), nil
 	}
 	s := newToolServer(t)
 	text, isErr := callTool(t, s, ToolThemeList, map[string]any{})
-	if isErr || !strings.Contains(text, "Gotham night") {
+	if isErr || !strings.Contains(text, "siren at night") || !strings.Contains(text, `"feel":"angry"`) {
 		t.Fatalf("theme_list err=%v text=%s", isErr, text)
 	}
-	text, isErr = callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "noir"})
-	if isErr || !strings.Contains(text, `"theme":"noir"`) {
+	text, isErr = callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "siren"})
+	if isErr || !strings.Contains(text, `"theme":"siren"`) {
 		t.Fatalf("theme_update err=%v text=%s", isErr, text)
 	}
 	if gets != 1 || posts != 1 {
@@ -148,7 +155,7 @@ func TestThemeUpdateAcceptsListedPaper(t *testing.T) {
 	t.Cleanup(func() { httpDo = old })
 	httpDo = func(req *http.Request) (*http.Response, error) {
 		if req.Method == http.MethodGet {
-			return jsonResponse(200, `{"theme":null,"themes":[{"id":"paper","label":"Paper","mood":"day workshop","canvas":"#f6f1e8","accent":"#c24a28"}]}`), nil
+			return jsonResponse(200, `{"theme":null,"themes":[{"id":"paper","label":"Paper","feel":"neutral","scheme":"light","mood":"neutral, light — day workshop","canvas":"#f6f1e8","accent":"#c24a28"}]}`), nil
 		}
 		body, _ := io.ReadAll(req.Body)
 		if req.Method != http.MethodPost || !strings.Contains(string(body), `"paper"`) {
@@ -172,17 +179,17 @@ func TestThemeUpdateClearsCacheWhenWorkerRejects(t *testing.T) {
 	httpDo = func(req *http.Request) (*http.Response, error) {
 		if req.Method == http.MethodGet {
 			gets++
-			return jsonResponse(200, `{"theme":null,"themes":[{"id":"noir","label":"Noir","mood":"Gotham night","canvas":"#0a0c10","accent":"#8eb4d4"}]}`), nil
+			return jsonResponse(200, `{"theme":null,"themes":[{"id":"siren","label":"Siren","feel":"angry","scheme":"dark","mood":"angry, dark — siren at night: black red, scarlet","canvas":"#160608","accent":"#ff2e3f"}]}`), nil
 		}
 		posts++
 		return jsonResponse(400, `{"error":"bad theme"}`), nil
 	}
 	s := newToolServer(t)
-	text, isErr := callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "noir"})
+	text, isErr := callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "siren"})
 	if !isErr || !strings.Contains(text, "bad theme") {
 		t.Fatalf("want worker reject, got err=%v text=%s", isErr, text)
 	}
-	text, isErr = callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "noir"})
+	text, isErr = callTool(t, s, ToolThemeUpdate, map[string]any{"theme": "siren"})
 	if !isErr || !strings.Contains(text, "bad theme") {
 		t.Fatalf("want second reject, got err=%v text=%s", isErr, text)
 	}

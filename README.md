@@ -25,7 +25,7 @@ Naming contract: [ai-gantry `docs/mcp-naming.md`](https://github.com/shotah/ai-g
 | `avatar_get` | `pendant__avatar_get` | Current face as MCP image + `{ rev, bytes }`; writes a file when `IMAGE_OUTPUT_DIR` is set |
 | `backdrop_update` | `pendant__backdrop_update` | Set the chat wallpaper → `POST /api/backdrop` |
 | `backdrop_delete` | `pendant__backdrop_delete` | Clear it → `DELETE /api/backdrop` |
-| `theme_list` | `pendant__theme_list` | `GET /api/theme` — current id plus cards (`id`, `label`, `mood`, `canvas`, `accent`) |
+| `theme_list` | `pendant__theme_list` | `GET /api/theme` — current id plus cards (`id`, `label`, `feel`, `scheme`, `mood`, `canvas`, `accent`) |
 | `theme_update` | `pendant__theme_update` | `{ theme }` from the catalog → `POST /api/theme` |
 | `theme_delete` | `pendant__theme_delete` | Clear the room mood → `DELETE /api/theme` |
 
@@ -38,7 +38,7 @@ Not in v1: `source_url` fetch, raw hex themes, `theme_snapshot`.
 1. `image__photo_generate` with `IMAGE_OUTPUT_DIR` set (1:1 portrait for the face, 9:16 for wallpaper).
 2. `pendant__avatar_update` / `pendant__backdrop_update` with that `source_path`.
 
-Mood: `theme_list` then `theme_update` — match the mood line ("be Batman" → noir). Do not invent hex.
+Mood: `theme_list` → filter `feel` → `theme_update`. Do not invent hex.
 
 `source_path` must resolve **inside** `IMAGE_OUTPUT_DIR` (or `PENDANT_IMAGE_DIR`) after symlinks. `/etc/hostname` is refused.
 

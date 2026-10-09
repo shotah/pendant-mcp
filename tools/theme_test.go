@@ -7,19 +7,25 @@ import (
 	"time"
 )
 
-// workerThemeIDs is today's Pendant catalog. Agent-facing MCP text must
-// not name these — adding a card is a Worker change, not an MCP rebuild.
+// workerThemeIDs is the Pendant catalog: boom, paper, ink, then the mood
+// dozen. Agent-facing MCP text must not name these — adding a card is a
+// Worker change, not an MCP rebuild.
 var workerThemeIDs = []string{
-	"boom", "inlay", "lamp", "noir", "ember", "tide", "bloom",
-	"paper", "chalk", "foam", "petal", "ink",
+	"boom", "paper", "ink",
+	"marquee", "lemonade",
+	"neon", "fizz",
+	"rain", "mist",
+	"fuse", "grit",
+	"siren", "flare",
+	"static", "flicker",
 }
 
 func TestParseThemeIDsReadsWorkerCards(t *testing.T) {
-	ids, err := parseThemeIDs([]byte(`{"theme":"boom","themes":[{"id":"Paper"},{"id":"noir"},{"id":" ink "}]}`))
+	ids, err := parseThemeIDs([]byte(`{"theme":"boom","themes":[{"id":"Paper"},{"id":"siren"},{"id":" ink "}]}`))
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, id := range []string{"paper", "noir", "ink"} {
+	for _, id := range []string{"paper", "siren", "ink"} {
 		if !ids[id] {
 			t.Fatalf("missing %s in %v", id, ids)
 		}
@@ -53,14 +59,14 @@ func TestThemeCatalogCacheIsPerRoom(t *testing.T) {
 	resetThemeCatalogCache()
 	kit := serverConfig{MailboxURL: "https://example.workers.dev", Slug: "kit"}
 	ada := serverConfig{MailboxURL: "https://example.workers.dev", Slug: "ada"}
-	rememberThemeCatalog(kit, map[string]bool{"noir": true})
+	rememberThemeCatalog(kit, map[string]bool{"siren": true})
 	rememberThemeCatalog(ada, map[string]bool{"paper": true})
 	kitIDs, ok := cachedThemeIDs(kit)
-	if !ok || !kitIDs["noir"] || kitIDs["paper"] {
+	if !ok || !kitIDs["siren"] || kitIDs["paper"] {
 		t.Fatalf("kit cache = %v ok=%v", kitIDs, ok)
 	}
 	adaIDs, ok := cachedThemeIDs(ada)
-	if !ok || !adaIDs["paper"] || adaIDs["noir"] {
+	if !ok || !adaIDs["paper"] || adaIDs["siren"] {
 		t.Fatalf("ada cache = %v ok=%v", adaIDs, ok)
 	}
 }
@@ -68,7 +74,7 @@ func TestThemeCatalogCacheIsPerRoom(t *testing.T) {
 func TestThemeCatalogCacheExpires(t *testing.T) {
 	resetThemeCatalogCache()
 	cfg := serverConfig{MailboxURL: "https://example.workers.dev", Slug: "kit"}
-	rememberThemeCatalog(cfg, map[string]bool{"noir": true})
+	rememberThemeCatalog(cfg, map[string]bool{"siren": true})
 	themeCatalogMu.Lock()
 	got := themeCatalogByKey[themeCatalogKey(cfg)]
 	got.at = time.Now().Add(-themeCatalogTTL - time.Second)
@@ -82,7 +88,7 @@ func TestThemeCatalogCacheExpires(t *testing.T) {
 func TestForgetThemeCatalog(t *testing.T) {
 	resetThemeCatalogCache()
 	cfg := serverConfig{MailboxURL: "https://example.workers.dev", Slug: "kit"}
-	rememberThemeCatalog(cfg, map[string]bool{"noir": true})
+	rememberThemeCatalog(cfg, map[string]bool{"siren": true})
 	forgetThemeCatalog(cfg)
 	if _, ok := cachedThemeIDs(cfg); ok {
 		t.Fatal("want forgotten catalog")

@@ -31,12 +31,12 @@ var (
 
 func registerTheme(s *mcpserver.MCPServer) {
 	list := mcp.NewTool(ToolThemeList,
-		mcp.WithDescription("List the color moods you can put on the phone app. Each card has a mood line and two hexes (canvas = background, accent = highlight). Pick one id, then call theme_update. Not for drawing a picture — that is image__photo_generate."),
+		mcp.WithDescription("List the color moods you can put on the phone app. Each card has feel (happy, excited, sad, frustrated, angry, anxious, or neutral) and scheme (dark / light), a mood line, and two hexes. Filter by how you feel, then by light or dark. Pick one id, then call theme_update. Not for drawing a picture — that is image__photo_generate."),
 	)
 	registerTool(s, list, handleThemeList)
 
 	update := mcp.NewTool(ToolThemeUpdate,
-		mcp.WithDescription("Set the phone app's color mood. Pass a theme id from theme_list. Match the mood line to how you feel; do not invent hex. Humans can unfollow and keep their own theme."),
+		mcp.WithDescription("Set the phone app's color mood. Pass a theme id from theme_list. Pick a card whose feel matches, scheme: light by day; neutral to go plain. Do not invent hex. Humans can unfollow and keep their own theme."),
 		mcp.WithString("theme", mcp.Required(), mcp.Description("Catalog id from theme_list (not raw hex).")),
 	)
 	registerTool(s, update, handleThemeUpdate)
